@@ -5,6 +5,7 @@ const errorHandler = (error, req, res, next) => {
     console.log(error.stack);
   
     console.log(error);
+    console.log('error found')
   
     res
       .status(error.statusCode || 500)

@@ -8,7 +8,7 @@ const connectDB = require('./config/db');
 // import route files
 const users = require('./routes/users');
 const auth = require('./routes/auth')
-const conversation = require('./routes/conversations')
+const conversation = require('./routes/conversation')
 
 const app = express();
 
@@ -24,7 +24,7 @@ connectDB();
 // init routes
 app.use('/api/users/', users);
 app.use('/api/auth/', auth)
-app.use('/api/conversations',conversation)
+app.use('/api/conversations/',conversation)
 
 app.get('/sample', (req, res) => {
     res.send('hello')
