@@ -26,10 +26,10 @@ exports.getAllConversations = async (req, res, next) => {
 exports.getAllConversationsForUser = async(req,res,next)=> {
     try{
         
-        let conversations = await Conversation.find({users:req.user})
+        let conversations = await Conversation.find({users:req.user.id})
         res.status(200).json({
             data:conversations
-        })
+        }) 
     }catch(error){
         next(new ErrorResponse(`${error.message}`,500))
     }
