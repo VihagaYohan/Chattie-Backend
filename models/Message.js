@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const Joi = require('Joi');
-const joiObjectid = require('joi-objectid');
+const Joi = require('joi');
+//const joiObjectid = require('joi-objectid');
 Joi.objectId = require('joi-objectid')(Joi)
 
 const messageSchema = new mongoose.Schema({
