@@ -25,8 +25,8 @@ exports.getAllConversations = async (req, res, next) => {
 // @access  private
 exports.getAllConversationsForUser = async (req, res, next) => {
     try {
-
-        let conversations = await Conversation.find({ users: req.user.id })
+        //let conversations = await Conversation.find({ users: req.user.id })
+        let conversations = await Conversation.find({users:{$in:[req.params.userId]}})
         res.status(200).json({
             data: conversations
         })
@@ -55,6 +55,7 @@ exports.createConversation = async (req, res, next) => {
         next(new ErrorResponse(`${error.message}`, 500, error))
     }
 }
+
 
 // @desc    delete a conversation
 // @route   DELETE/api/conversations/:id
