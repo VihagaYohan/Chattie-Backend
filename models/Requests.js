@@ -14,7 +14,7 @@ const requestSchema = new mongoose.Schema({
         required:true
     },
     status:{
-        type:string,
+        type:String,
         enum:['Accepted','Pending','Reject','Sent']
     },
     createdOn:{
