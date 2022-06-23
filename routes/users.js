@@ -8,9 +8,12 @@ const {
   deleteUser,
 } = require("../controllers/users");
 
+const auth = require('../middleware/auth'
+)
+
 const router = express.Router();
 
-router.route("/").get(getAllUsers).post(addUser);
+router.route("/").get(auth,getAllUsers).post(addUser);
 
 router.route("/:id").get(getUser).put(updateUser).delete(deleteUser);
 
