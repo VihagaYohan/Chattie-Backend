@@ -11,6 +11,7 @@ const users = require('./routes/users');
 const auth = require('./routes/auth')
 const conversation = require('./routes/conversation')
 const messages = require('./routes/messages');
+const requests = require('./routes/request')
 
 const app = express();
 
@@ -32,10 +33,7 @@ app.use('/api/users/', users);
 app.use('/api/auth/', auth)
 app.use('/api/conversations/',conversation)
 app.use('/api/messages/',messages)
-
-app.get('/sample', (req, res) => {
-    res.send('hello')
-})
+app.use('/api/requests/',requests)
 
 let list = [
 
@@ -43,12 +41,20 @@ let list = [
 
 // socket io connection
 io.on('connection',(socket)=>{
-    console.log('a user connected')
+    console.log('a user connected', socket)
+
+
+    // listen for a chat message
     socket.on('message', (msg) => {
-        console.log('message: ' + msg);
-        io.emit('message',msg)
-      });  
-})
+        list.push(msg)
+        io.emit('message',list)
+      }); 
+      
+      // broadcast when user disconnects
+      socket.on('disconnect',()=>{
+          io.emit('message','A user has left the chat')
+      })
+}) 
 
 
 
