@@ -4,7 +4,7 @@ const {Request,requestSchema,requestValidation} = require('../models/Requests')
 
 
 // @desc    send user request
-// @route   POST/api/requests/:userId,
+// @route   POST/api/requests,
 // @access  private
 exports.sendRequest = async(req,res,next)=>{
     try{
@@ -33,5 +33,44 @@ exports.sendRequest = async(req,res,next)=>{
         error
     ){
         next(new ErrorResponse(`${error.message}`,500))
+    }
+}
+
+// @desc    get all requests for a user 
+// @route   GET/api/requests/:userId,
+// @access  private
+exports.getRequests = async(req,res,next)=>{
+    try{
+        let allRequsts = await Request.find({receiverId:req.params.userId,
+        status:"Requested"});
+        res.status(200).json({
+            success:true,
+            data:allRequsts
+        })
+    }catch(error){
+        next(new ErrorResponse(`${error.message},500`))
+    }
+}
+
+// @desc    update request
+// @route   PUT/api/requests/:requestId
+// @access  private
+exports.updateRequests = async(req,res,next)=>{
+    try{
+        let request = await Request.findById(req.params.requestId);
+        if(request == null) return res.status(404).json({
+            success:false,
+            data:"Unable to locate request for given ID"
+        }) 
+
+        request.status = req.body.status;
+        request = await request.save(); 
+
+        res.status(200).json({
+            success:true,
+            data:request
+        })
+    }catch(error){
+        next (new ErrorResponse(`${error.message},500`))
     }
 }
