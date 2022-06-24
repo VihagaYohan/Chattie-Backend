@@ -15,7 +15,7 @@ const requestSchema = new mongoose.Schema({
     },
     status:{
         type:String,
-        enum:['Accepted','Pending','Reject','Sent',"Requested"]
+        enum:['Accepted','Pending','Reject','Sent',"Requested","Cancel"]
     },
     createdOn:{
         type:Date,

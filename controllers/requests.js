@@ -47,7 +47,30 @@ exports.getRequests = async(req,res,next)=>{
             success:true,
             data:allRequsts
         })
-    }catch(e){
+    }catch(error){
         next(new ErrorResponse(`${error.message},500`))
+    }
+}
+
+// @desc    update request
+// @route   PUT/api/requests/:requestId
+// @access  private
+exports.updateRequests = async(req,res,next)=>{
+    try{
+        let request = await Request.findById(req.params.requestId);
+        if(request == null) return res.status(404).json({
+            success:false,
+            data:"Unable to locate request for given ID"
+        }) 
+
+        request.status = req.body.status;
+        request = await request.save(); 
+
+        res.status(200).json({
+            success:true,
+            data:request
+        })
+    }catch(error){
+        next (new ErrorResponse(`${error.message},500`))
     }
 }
