@@ -35,6 +35,9 @@ const userSchema = new mongoose.Schema({
         maxlength: [10, "Phone number shoud not be longer than 10 characters"],
         unieq: true,
     },
+    friends:[{
+        type:String
+    }],
     resetPasswordToken: {
         type: String,
     },
