@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const {Message,messageValidation} = require('../models/Message')
+const {Message,messageValidation, messageSchema} = require('../models/Message')
 const ErrorResponse = require('../utility/errorResponse')
 
 
@@ -8,8 +8,11 @@ const ErrorResponse = require('../utility/errorResponse')
 // @access  private
 exports.getAllMessages = async(req,res,next)=>{
     try{
-        const messasges = await Message.find({conversationId:req.params.conversationId});
-        console.log(messasges)
+        const messages = await Message.find({conversationId:req.params.conversationId});
+        res.status(200).json({
+            success:true,
+            data:messages
+        })
         
     }catch(error){
         next(new ErrorResponse(`${error.message}`, 500))
