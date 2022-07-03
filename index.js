@@ -2,6 +2,9 @@ const express = require('express');
 const dotenv = require('dotenv');
 //const config = require('config');
 
+// import util functions
+const {saveMessage,getAllMessages} = require('./utility/message')
+
 
 // import DB connection
 const connectDB = require('./config/db');
@@ -33,19 +36,16 @@ app.use('/api/auth/', auth)
 app.use('/api/conversations/',conversation)
 app.use('/api/messages/',messages)
 
-let list = [
-
-]
 
 // socket io connection
-io.on('connection',(socket)=>{
+io.on('connection',async (socket)=>{
     console.log('a user connected', socket)
 
 
     // listen for a chat message
-    socket.on('message', (msg) => {
-        list.push(msg)
-        io.emit('message',list)
+    socket.on('message', async(msg) => {
+        let result = await saveMessage(msg);
+        io.emit('message',result)
       }); 
       
       // broadcast when user disconnects
