@@ -14,6 +14,7 @@ const users = require('./routes/users');
 const auth = require('./routes/auth')
 const conversation = require('./routes/conversation')
 const messages = require('./routes/messages');
+const requests = require('./routes/requests');
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.use('/api/users/', users);
 app.use('/api/auth/', auth)
 app.use('/api/conversations/',conversation)
 app.use('/api/messages/',messages)
+app.use('/api/requests/',requests)
 
 
 // socket io connection
